@@ -10,6 +10,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import SearchIcon from '@material-ui/icons/Search';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import PeopleIcon from '@material-ui/icons/People';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import GroupIcon from '@material-ui/icons/Group';
+import RecentActorsIcon from '@material-ui/icons/RecentActors';
 
 const drawerWidth = 240;
 
@@ -31,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Menu() {
     const classes = useStyles();
-
+    const customerIcons = [<AddBoxIcon/>, <SearchIcon/>, <PeopleIcon/>, <BusinessCenterIcon/>, <AccountCircleIcon/>];
+    const employeeIcons = [<SearchIcon/>, <PeopleIcon/>, <RecentActorsIcon/>];
     return (
         <div>
             <CssBaseline />
@@ -45,18 +53,21 @@ function Menu() {
                 <Toolbar />
                 <div className={classes.drawerContainer}>
                     <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        <ListItem>  <ListItemText primary= "Customer:" /> </ListItem>
+                        {['New Customer', 'Search', 'Directory', 'Prime Members', 'Active Members']
+                            .map((text, index) => (
                             <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                                <ListItemIcon>{customerIcons[index]}</ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
                         ))}
                     </List>
                     <Divider />
                     <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                        <ListItem>  <ListItemText primary= "Employee:" /> </ListItem>
+                        {['Search', 'Directory', 'Manage'].map((text, index) => (
                             <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                                <ListItemIcon>{employeeIcons[index]}</ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
                         ))}
