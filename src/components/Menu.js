@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,17 +8,16 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import PeopleIcon from '@material-ui/icons/People';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import GroupIcon from '@material-ui/icons/Group';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 
 const drawerWidth = 240;
+
+
 
 const useStyles = makeStyles((theme) => ({
     drawer: {
@@ -30,15 +29,14 @@ const useStyles = makeStyles((theme) => ({
     drawerContainer: {
         overflow: 'auto',
     },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
 }));
 
-function Menu() {
+
+function Menu(props) {
     const classes = useStyles();
     const customerIcons = [<AddBoxIcon/>, <SearchIcon/>, <PeopleIcon/>, <BusinessCenterIcon/>, <AccountCircleIcon/>];
+    const customerOnClick = [props.cNew, props.cSearch, props.cDirec, props.cPrime, props.cActive];
+    const employeeOnClick = [props.eSearch, props.eDirec, props.eManage];
     const employeeIcons = [<SearchIcon/>, <PeopleIcon/>, <RecentActorsIcon/>];
     return (
         <div>
@@ -56,7 +54,7 @@ function Menu() {
                         <ListItem>  <ListItemText primary= "Customer:" /> </ListItem>
                         {['New Customer', 'Search', 'Directory', 'Prime Members', 'Active Members']
                             .map((text, index) => (
-                            <ListItem button key={text}>
+                            <ListItem button key={text} onClick={customerOnClick[index]}>
                                 <ListItemIcon>{customerIcons[index]}</ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
@@ -66,7 +64,7 @@ function Menu() {
                     <List>
                         <ListItem>  <ListItemText primary= "Employee:" /> </ListItem>
                         {['Search', 'Directory', 'Manage'].map((text, index) => (
-                            <ListItem button key={text}>
+                            <ListItem button key={text} onClick={employeeOnClick[index]}>
                                 <ListItemIcon>{employeeIcons[index]}</ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
