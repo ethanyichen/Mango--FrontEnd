@@ -12,7 +12,8 @@ import EmployeeDirectory from "./components/EmployeePages/EmployeeDirectory";
 import EmployeeSearch from "./components/EmployeePages/EmployeeSearch";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-function App() {
+function App(props) {
+    const [state, setState] = useState({apiResponse: ""});
     const [displayMenu, setDisplayMenu] = useState(false);
     const [displayCSearch, setDisplayCSearch] = useState(false);
     const [displayCDirectory, setDisplayCDirectory] = useState(false);
@@ -24,6 +25,12 @@ function App() {
     const [displayESearch, setDisplayESearch] = useState(false);
     const onClickFunc = [setDisplayCSearch, setDisplayCDirectory, setDisplayCNew,
         setDisplayCActive, setDisplayCPrime, setDisplayEManage, setDisplayEDirec, setDisplayESearch];
+
+    function callAPI() {
+        fetch("http://localhost:3000/hello")
+            .then(res => res.text())
+            .then(res => setState({ apiResponse: res }));
+    }
 
     function disableOtherDisplay() {
         onClickFunc.forEach((item) => {
@@ -70,6 +77,8 @@ function App() {
     function updateDisplayMenuOnClick (){
         setDisplayMenu(!displayMenu);
     }
+
+    callAPI();
   return (
       <div className="App">
           <CssBaseline />
@@ -86,11 +95,12 @@ function App() {
         {displayEDirec && <EmployeeDirectory/>}
         {displayEManage && <EmployeeManage/>}
         {displayESearch && <EmployeeSearch/>}
-        {/*<h1 className="main-content">Main content starts here</h1>*/}
+        <h1 className="main-content">{state.apiResponse}</h1>
         <Footer />
     </div>
       </div>
   );
 }
+
 
 export default App;
