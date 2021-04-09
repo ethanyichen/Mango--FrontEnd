@@ -27,7 +27,7 @@ function App(props) {
         setDisplayCActive, setDisplayCPrime, setDisplayEManage, setDisplayEDirec, setDisplayESearch];
 
     function callAPI() {
-        fetch("http://localhost:3000/hello")
+        fetch("/hello")
             .then(res => res.text())
             .then(res => setState({ apiResponse: res }));
     }
