@@ -13,7 +13,8 @@ import EmployeeSearch from "./components/EmployeePages/EmployeeSearch";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 function App(props) {
-    const [state, setState] = useState({apiResponse: ""});
+    const [displayWelcomeStatement, setDisplayWelcomeStatement] = useState(true);
+    const [welcomeStatement, setWelcomeStatement] = useState({apiResponse: ""});
     const [displayMenu, setDisplayMenu] = useState(false);
     const [displayCSearch, setDisplayCSearch] = useState(false);
     const [displayCDirectory, setDisplayCDirectory] = useState(false);
@@ -24,12 +25,16 @@ function App(props) {
     const [displayEDirec, setDisplayEDirec] = useState(false);
     const [displayESearch, setDisplayESearch] = useState(false);
     const onClickFunc = [setDisplayCSearch, setDisplayCDirectory, setDisplayCNew,
-        setDisplayCActive, setDisplayCPrime, setDisplayEManage, setDisplayEDirec, setDisplayESearch];
+        setDisplayCActive, setDisplayCPrime, setDisplayEManage,
+        setDisplayEDirec, setDisplayESearch, setDisplayWelcomeStatement];
 
     function callAPI() {
-        fetch("/hello")
-            .then(res => res.text())
-            .then(res => setState({ apiResponse: res }));
+        if(welcomeStatement.apiResponse === "") {
+            fetch("/hello")
+                .then(res => res.text())
+                .then(res => setWelcomeStatement({apiResponse: res}))
+                .catch(err => setWelcomeStatement({apiResponse: err}))
+        }
     }
 
     function disableOtherDisplay() {
@@ -95,7 +100,7 @@ function App(props) {
         {displayEDirec && <EmployeeDirectory/>}
         {displayEManage && <EmployeeManage/>}
         {displayESearch && <EmployeeSearch/>}
-        <h1 className="main-content">{state.apiResponse}</h1>
+        {displayWelcomeStatement && <h1 className="main-content">{welcomeStatement.apiResponse}</h1>}
         <Footer />
     </div>
       </div>
