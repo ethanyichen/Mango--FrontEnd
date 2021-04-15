@@ -27,6 +27,7 @@ function NewCustomer() {
     const [nameErrorText, setNameErrorText] = useState("Invalid Input");
     const [phoneError, setPhoneError] = useState(false);
     const [phoneErrorText, setPhoneErrorText] = useState("Invalid Input");
+    const [customerAddStatus, setCustomerAddStatus] = useState({apiResponse: ""});
     const classes = useStyles();
 
     function onCustomerAddSubmit(event) {
@@ -40,6 +41,7 @@ function NewCustomer() {
         } else {
             setPhoneError(false);
         }
+        callCustomerAddAPI();
         event.preventDefault();
     }
 
@@ -80,6 +82,24 @@ function NewCustomer() {
             return false;
         }
         return true;
+    }
+
+    function callCustomerAddAPI() {
+        if(customerAddStatus.apiResponse === "") {
+            fetch('/customer/add', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cName: nameInput,
+                    phoneNum: phoneInput,
+                })
+            }).then(res => res.text())
+                .then(res => setCustomerAddStatus({apiResponse: res}))
+                .catch(err => setCustomerAddStatus({apiResponse: err}))
+        }
     }
     return( <div className="main-content">
             <h1>New Customer:</h1>
